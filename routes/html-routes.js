@@ -1,11 +1,12 @@
 const router = require('express').Router()
+const path - require('path')
 
 router.get('/', (req, res) => {
-    console.log('Request Received')
+    res.sendFile(path.join(__dirname, '../public/index.html'))
 })
 
 router.get('/notes', (req, res) => {
-    console.log('Notes Request Received')
+    res.sendFIle(path.join(__dirname, '../public/notes.html'))
 })
 
 module.exports = router
