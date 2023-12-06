@@ -1,4 +1,5 @@
 const router = require('express').Router()
+const { v4: uuidv4 } = require('uuid')
 const fs = require ('fs')
 
 router.get('/api/notes', async (req, res) => {
@@ -21,6 +22,12 @@ router.post('/api/notes', (req, res) => {
 
 router.delete('/api/notes', (req, res) => {
     console.log('Delete request received')
+    const data = JSON.parse(fs.readFileSync('db/db.json', 'utf8'))
+    const newData = data.filter((note) => {
+        return note.it !== req.params.id
+    })
+    fs.writeFileSync('db/db.json', JSON.stringify(newData))
+    res.JSON('Note Deleted')
 })
 
 module.exports = router
