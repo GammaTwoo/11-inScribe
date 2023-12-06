@@ -15,7 +15,7 @@ router.post('/api/notes', (req, res) => {
         text: req.body.text
     }
     data.push(newData)
-    fs.writeFileSync('db/db.json', data)
+    fs.writeFileSync('db/db.json', JSON.stringify(data))
     res.json(data)
 })
 
