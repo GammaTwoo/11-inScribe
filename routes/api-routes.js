@@ -13,7 +13,8 @@ router.post('/api/notes', (req, res) => {
     const data = JSON.parse(fs.readFileSync('db/db.json', 'utf8'))
     const newData = {
         title: req.body.title,
-        text: req.body.text
+        text: req.body.text,
+        id: uuidv4()
     }
     data.push(newData)
     fs.writeFileSync('db/db.json', JSON.stringify(data))
@@ -22,7 +23,7 @@ router.post('/api/notes', (req, res) => {
 
 router.delete('/api/notes', (req, res) => {
     console.log('Delete request received')
-    const data = JSON.parse(fs.readFileSync('db/db.json', 'utf8'))
+    let data = JSON.parse(fs.readFileSync('db/db.json', 'utf8'))
     const newData = data.filter((note) => {
         return note.it !== req.params.id
     })
