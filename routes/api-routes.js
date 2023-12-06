@@ -21,14 +21,16 @@ router.post('/api/notes', (req, res) => {
     res.json(data)
 })
 
-router.delete('/api/notes', (req, res) => {
+router.delete('/api/notes/:id', (req, res) => {
     console.log('Delete request received')
-    let data = JSON.parse(fs.readFileSync('db/db.json', 'utf8'))
-    const newData = data.filter((note) => {
-        return note.it !== req.params.id
+    console.log(req.params.id)
+    let data = fs.readFileSync('db/db.json', 'utf8')
+    const dataJSON = JSON.parse(data)
+    const newData = dataJSON.filter((note) => {
+        return note.id !== req.params.id
     })
-    fs.writeFileSync('db/db.json', JSON.stringify(newData))
-    res.JSON('Note Deleted')
+    fs.writeFileSync('db/db.json', JSON.stringify(newData), 'utf8')
+    res.json('Note Deleted')
 })
 
 module.exports = router
